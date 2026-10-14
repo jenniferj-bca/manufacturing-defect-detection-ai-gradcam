@@ -18,50 +18,98 @@ config.yaml           Reproducible experiment settings
 
 ## Setup
 
+## Setup
+
+### 1. Create a virtual environment
+
 ```powershell
 py -m venv .venv
+```
+
+### 2. Activate the virtual environment
+
+```powershell
 .\.venv\Scripts\Activate.ps1
+```
+
+### 3. Install dependencies
+
+```powershell
 pip install -r requirements.txt
 ```
 
-Download the Kaggle dataset and arrange it as described in [data/README.md](data/README.md).
-The current workspace's `casting_512x512/` layout is supported directly.
+### Dataset
+
+Download the Kaggle casting dataset and arrange it as described in [data/README.md](data/README.md). The project supports the `casting_512x512/` dataset layout.
 
 ## Train and evaluate
 
-From the project root:
+## Train and Evaluate
+
+Run these commands from the project root after activating your virtual environment.
+
+### Train using EfficientNet
 
 ```powershell
 python src/train.py --model efficientnet
+```
+
+### Evaluate the model
+
+```powershell
 python src/evaluate.py
+```
+
+### Run inference on an image
+
+```powershell
 python src/inference.py path\to\image.jpeg
 ```
 
-Use `--model custom` for the CNN trained from scratch. Training creates
-`models/best_model.keras`; evaluation writes the classification report and
-confusion matrix under `reports/`. The target is >99% test accuracy, but the
-actual result depends on the dataset variant, split, hardware, and training time;
-always use the generated report rather than assuming the target.
+Replace `path\to\image.jpeg` with the path to your test image.
+
+To train the custom CNN from scratch, use:
+
+```powershell
+python src/train.py --model custom
+```
+
+Training generates `models/best_model.keras`. Evaluation saves the classification report and confusion matrix under `reports/`.
+
+**Note:** Actual accuracy depends on the dataset, train-test split, hardware, and training process. Always report the measured test results rather than assuming a target accuracy.
 
 ## Streamlit demo
 
+## Streamlit Demo
+
+Run the web application from the project root.
+
+### 1. Install application dependencies
+
 ```powershell
 pip install -r app/requirements_app.txt
+```
+
+### 2. Launch the application
+
+```powershell
 streamlit run app/streamlit_app.py
 ```
 
-Upload an image or select **Webcam / production camera** to capture a casting
-part from a camera available to the browser. Each capture is inspected through
-the same prediction and Grad-CAM flow; this is single-frame capture, not
-continuous video inference. Browser camera permission is required, and deployed
-apps must use HTTPS. Use the **Light theme** toggle on the sign-in page or in
-the dashboard sidebar to switch between light and dark themes. View the
-predicted class, confidence, raw heatmap, and an overlay showing regions that contributed to the decision. Select **Save
-inspection to history** to retain a result in the local
-`reports/inspection_history.sqlite3` database. Saved inspections remain available
-after restarting the app and power the History and Reports views, including CSV
-and JSON exports.
+Open the local URL shown in the terminal.
 
+### Features
+
+- **AI-Based Defect Detection:** Classifies casting images as defective (`def_front`) or good (`ok_front`).
+- **Image Upload:** Upload a casting image for inspection.
+- **Camera Inspection:** Capture a single image using a browser-supported webcam or production camera.
+- **Grad-CAM Explainability:** View a heatmap and overlay highlighting image regions that influenced the prediction.
+- **Confidence Score:** View the model's prediction confidence.
+- **Inspection History:** Save inspection results and review them later.
+- **Reports and Exports:** Access inspection records and export reports as CSV or JSON.
+- **Light and Dark Themes:** Switch between the available interface themes.
+
+Inspection history is stored locally in `reports/inspection_history.sqlite3`. Camera access requires browser permission; deployed applications require HTTPS for camera access.
 ## Notebooks
 
 The notebooks are executable walkthroughs for EDA, custom CNN training,
