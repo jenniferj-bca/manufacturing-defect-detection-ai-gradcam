@@ -16,7 +16,7 @@ reports/              Metrics, plots, and Grad-CAM examples (generated locally)
 config.yaml           Reproducible experiment settings
 ```
 
-## Setup
+
 
 ## Setup
 
@@ -42,7 +42,7 @@ pip install -r requirements.txt
 
 Download the Kaggle casting dataset and arrange it as described in [data/README.md](data/README.md). The project supports the `casting_512x512/` dataset layout.
 
-## Train and evaluate
+
 
 ## Train and Evaluate
 
@@ -80,7 +80,7 @@ Training generates `models/best_model.keras`. Evaluation saves the classificatio
 
 ## Streamlit demo
 
-## Streamlit Demo
+
 
 Run the web application from the project root.
 
