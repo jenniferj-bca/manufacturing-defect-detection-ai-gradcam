@@ -1,0 +1,21 @@
+seed: 42
+data:
+  root: "casting_512x512"
+  image_size: 224
+  batch_size: 32
+  validation_split: 0.2
+  num_channels: 3
+training:
+  model: "efficientnet"
+  epochs: 25
+  fine_tune_epochs: 10
+  learning_rate: 0.001
+  fine_tune_learning_rate: 0.00001
+  patience: 5
+  model_path: "models/best_model.keras"
+  class_weight_mode: "balanced"
+evaluation:
+  report_path: "reports/classification_report.txt"
+  confusion_matrix_path: "reports/confusion_matrix.png"
+  curves_path: "reports/training_curves.png"
+  gradcam_dir: "reports/gradcam_examples"
